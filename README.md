@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="man/figures/logo.png" alt="looSTAAR logo" style="width:100%; height:auto; max-height:120px;">
+  <img src="man/figures/logo.png" alt="looSTAAR logo" style="height:120px; width:auto;">
 </p>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
