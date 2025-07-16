@@ -68,7 +68,7 @@ if (!is.null(null_model)) {
   print(head(result))
 
   # Save results (optional for vignette build)
-  if (interactive()) data.table::fwrite(result, "synthetic_LOO_STAAR_results.txt", sep = "\t")
+  data.table::fwrite(result, tempfile("synthetic_LOO_STAAR_results", fileext = ".txt"), sep = "\t")
 }
 ```
 
