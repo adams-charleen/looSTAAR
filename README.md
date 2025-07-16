@@ -1,4 +1,6 @@
-<img src="man/figures/logo.png" alt="looSTAAR logo" style="height:120px; width:100%;">
+<p align="center">
+  <img src="man/figures/logo.png" alt="looSTAAR logo" style="width:100%; max-height:120px;">
+</p>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
