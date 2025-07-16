@@ -103,7 +103,7 @@ $$
 = \log_{10}\!\Bigl(\frac{p_{\text{full}}}{p_{\text{LOO}_i}}\Bigr)
 $$
 
-A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means \( p_{\text{LOO}_i} > p_{\text{full}} \), so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means \( p_{\text{LOO}_i} < p_{\text{full}} \), suggesting the variant weakens the association. 
+A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means $$\( p_{\text{LOO}_i} > p_{\text{full}} \)$$, so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means $$\( p_{\text{LOO}_i} < p_{\text{full}} \)$$, suggesting the variant weakens the association. 
 
 ## Conclusion
 
