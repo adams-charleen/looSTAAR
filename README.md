@@ -12,3 +12,11 @@ install_github("adams-charleen/looSTAAR", build_vignettes = TRUE)
 library(looSTAAR)
 vignette("looSTAAR-guide")
 ```
+
+## Visual Example
+
+Below is a synthetic example showing how each variant influences the STAAR-O gene-level p-value:
+
+<p align="center">
+  <img src="man/synthetic_LOO_STAAR_plot.png" width="80%">
+</p>
