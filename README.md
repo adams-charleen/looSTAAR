@@ -18,5 +18,37 @@ vignette("looSTAAR-guide")
 Below is a synthetic example showing how each variant influences the STAAR-O gene-level p-value:
 
 <p align="center">
-  <img src="man/synthetic_LOO_STAAR_plot.png" width="80%">
+  <img src="man/synthetic_LOO_STAAR_plot.png" width="1080">
 </p>
+
+## Interpretation
+
+- The `Baseline_STAAR_O_pval` refers to the omnibus (gene- or region-level) association (not the effects of individual SNPs; it's the same for all). 
+
+- `LOO_STAAR_O_pval` is the omnibus p-value from `STAAR` with the given SNP removed. 
+
+- `Delta_log10p` is the log10 p-value of the difference between `Baseline_STAAR_O_pval` and `LOO_STAAR_O_pval`, where:
+
+$$
+\Delta = \log_{10}\bigl(p_{\text{full}}\bigr)\;-\;\log_{10}\bigl(p_{\text{LOO}_i}\bigr)
+= \log_{10}\!\Bigl(\frac{p_{\text{full}}}{p_{\text{LOO}_i}}\Bigr)
+$$
+
+A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means \( p_{\text{LOO}_i} > p_{\text{full}} \), so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means \( p_{\text{LOO}_i} < p_{\text{full}} \), suggesting the variant weakens the association. 
+
+## Conclusion
+
+`looSTAAR` is a tool to probe rare-variant contributions from `STAAR` omnibus test results using leave-one-out (LOO) analysis. The `Delta_log10p` values provide a quantitative measure of each variant’s influence on the gene- or region-level association, enabling researchers to identify key drivers that strengthen the signal (negative values) or diluters that mask it (positive values). This insight is particularly useful for prioritizing variants for functional validation or further investigation in genomic studies. The accompanying visualization of `Delta_log10p` against genomic position enhances interpretability, highlighting patterns of influence across a region.
+
+
+## Credit
+
+I gratefully acknowledge the foundational work of Li and colleagues (2020, 2022) in developing the STAAR framework, which `looSTAAR` builds upon. Please cite their papers if you use `looSTAAR` in your research:
+
+- Li, X., Li, Z., Zhou, H., Gaynor, S. M., Liu, Y., Chen, H., ... & Lin, X. (2020). *Dynamic incorporation of multiple in silico functional annotations empowers rare variant association analysis of large whole-genome sequencing studies at scale*. *Nature Genetics*, 52(9), 969-983. [PMID: 32839606](https://pubmed.ncbi.nlm.nih.gov/32839606/), [PMCID: PMC7483769](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7483769/), [DOI: 10.1038/s41588-020-0676-4](https://doi.org/10.1038/s41588-020-0676-4).
+
+- Li, Z., Li, X., Zhou, H., Gaynor, S. M., Selvaraj, M. S., Arapoglou, T., ... & Lin, X. (2022). *A framework for detecting noncoding rare variant associations of large-scale whole-genome sequencing studies*. *Nature Methods*, 19(12), 1599-1611. [PMID: 36303018](https://pubmed.ncbi.nlm.nih.gov/36303018/), [PMCID: PMC10008172](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10008172/), [DOI: 10.1038/s41592-022-01640-x](https://doi.org/10.1038/s41592-022-01640-x).
+
+```{r}
+sessionInfo()
+```
