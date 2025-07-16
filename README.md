@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="man/figures/logo.png" height="80">
+  <img src="man/figures/logo.png" width="1400" height="120">
 </p>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
