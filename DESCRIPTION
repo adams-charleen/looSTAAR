@@ -1,0 +1,13 @@
+Package: looSTAAR
+Title: Leave-One-Out STAAR-O Influence Analysis
+Version: 0.1.0
+Authors@R: person("Charleen", "Adams", email = "cadams9@bidmc.harvard.edu", role = c("aut", "cre"))
+Description: An R package extending the STAAR framework by Li and colleagues (2020, 2022) with a leave-one-out analysis to quantify the influence of individual variants on gene-based association p-values.
+Depends: R (>= 3.5.0)
+Imports:parallel
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Suggests: knitr, rmarkdown, data.table, ggplot2, ggrepel, STAAR
+VignetteBuilder: knitr

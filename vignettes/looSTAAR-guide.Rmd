@@ -1,0 +1,122 @@
+---
+title: "looSTAAR Guide: Leave-One-Out STAAR-O Analysis"
+author: "Charleen Adams"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{looSTAAR-guide}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+```{r setup}
+library(looSTAAR)
+if (requireNamespace("STAAR", quietly = TRUE)) library(STAAR)
+library(data.table)  # For fread
+```
+
+## Introduction
+
+The `looSTAAR` package extends the STAAR (variant-Set Test for Association using Annotation infoRmation) framework by Li and colleagues (2020, 2022) with a leave-one-out (LOO) sensitivity analysis. This vignette demonstrates how to use `looSTAAR` to quantify the influence of individual rare variants on gene- (or region-) based association p-values using synthetic data. 
+
+The package offers parallelized computation for efficiency.
+
+**Note:** The `STAAR` package is required and must be installed separately before running this vignette.
+
+## Synthetic Example
+
+`looSTAAR` requires a genotype matrix and null model derived from `fit_null_glm` in the `STAAR` package. We’ll generate data with 5000 samples and 500 variants. The example uses a single core `(n_cores = 1`), but users can increase `n_cores` on their systems for larger analyses.
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Generate synthetic genotype data (5000 samples, 500 variants)
+genotype_data <- matrix(rbinom(2500000, 2, 0.01), nrow = 5000, ncol = 500)
+colnames(genotype_data) <- paste0("var", 1:500)
+
+# Simulate genomic positions (e.g., 1 to 500 bp on a hypothetical chromosome)
+positions <- 1:500
+
+# Introduce a synthetic association with the first variant
+pheno_effect <- 0.5 * genotype_data[, 1]
+pheno_data <- data.frame(y = rnorm(5000) + pheno_effect)
+
+# Fit null model (conditional on STAAR)
+if (requireNamespace("STAAR", quietly = TRUE)) {
+  null_model <- STAAR::fit_null_glm(y ~ 1, family = gaussian(), data = pheno_data)
+} else {
+  message("STAAR package not found. Please install it with devtools::install_github('xihaoli/STAAR') to run this example.")
+  null_model <- NULL
+}
+
+# Run looSTAAR on a subset of 100 variants with single core (if STAAR is available)
+if (!is.null(null_model)) {
+  result <- looSTAAR(genotype_data[, 1:100], null_model, maf_cutoff = 0.01, n_cores = 1)
+  # Add simulated positions to results
+  result$Position <- positions[1:100]
+  print(head(result))
+
+  # Save results (optional for vignette build)
+  if (interactive()) data.table::fwrite(result, "synthetic_LOO_STAAR_results.txt", sep = "\t")
+}
+```
+
+## Visualization
+
+Visualize the influence of variants with a plot of `Delta_log10p` against genomic position:
+
+```{r, fig.width=12, fig.height=6}
+if (!is.null(null_model) && requireNamespace("ggplot2", quietly = TRUE) && requireNamespace("ggrepel", quietly = TRUE)) {
+  library(ggplot2)
+  library(ggrepel)
+  p <- plot_looSTAAR(result, title = "Synthetic LOO STAAR-O Influence")
+  # Save the plot at 600 DPI
+  ggsave("synthetic_LOO_STAAR_plot.png", plot = p, width = 12, height = 6, dpi = 600, units = "in")
+  # Display the plot in the vignette
+  print(p)
+} else {
+  message("ggplot2, ggrepel, or STAAR not available. Install them to see the plot.")
+}
+```
+
+## Interpretation
+
+- The `Baseline_STAAR_O_pval` refers to the omnibus (gene- or region-level) association (not the effects of individual SNPs; it's the same for all). 
+
+- `LOO_STAAR_O_pval` is the omnibus p-value from `STAAR` with the given SNP removed. 
+
+- `Delta_log10p` is the log10 p-value of the difference between `Baseline_STAAR_O_pval` and `LOO_STAAR_O_pval`, where:
+
+$$
+\Delta = \log_{10}\bigl(p_{\text{full}}\bigr)\;-\;\log_{10}\bigl(p_{\text{LOO}_i}\bigr)
+= \log_{10}\!\Bigl(\frac{p_{\text{full}}}{p_{\text{LOO}_i}}\Bigr)
+$$
+
+A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means \( p_{\text{LOO}_i} > p_{\text{full}} \), so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means \( p_{\text{LOO}_i} < p_{\text{full}} \), suggesting the variant weakens the association. 
+
+## Conclusion
+
+`looSTAAR` is a tool to probe rare-variant contributions from `STAAR` omnibus test results using leave-one-out (LOO) analysis. The `Delta_log10p` values provide a quantitative measure of each variant’s influence on the gene- or region-level association, enabling researchers to identify key drivers that strengthen the signal (negative values) or diluters that mask it (positive values). This insight is particularly useful for prioritizing variants for functional validation or further investigation in genomic studies. The accompanying visualization of `Delta_log10p` against genomic position enhances interpretability, highlighting patterns of influence across a region.
+
+## Credit
+
+I gratefully acknowledge the foundational work of Li and colleagues (2020, 2022) in developing the STAAR framework, which `looSTAAR` builds upon. Please cite their papers if you use `looSTAAR` in your research:
+
+- Li, X., Li, Z., Zhou, H., Gaynor, S. M., Liu, Y., Chen, H., ... & Lin, X. (2020). *Dynamic incorporation of multiple in silico functional annotations empowers rare variant association analysis of large whole-genome sequencing studies at scale*. *Nature Genetics*, 52(9), 969-983. [PMID: 32839606](https://pubmed.ncbi.nlm.nih.gov/32839606/), [PMCID: PMC7483769](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7483769/), [DOI: 10.1038/s41588-020-0676-4](https://doi.org/10.1038/s41588-020-0676-4).
+
+- Li, Z., Li, X., Zhou, H., Gaynor, S. M., Selvaraj, M. S., Arapoglou, T., ... & Lin, X. (2022). *A framework for detecting noncoding rare variant associations of large-scale whole-genome sequencing studies*. *Nature Methods*, 19(12), 1599-1611. [PMID: 36303018](https://pubmed.ncbi.nlm.nih.gov/36303018/), [PMCID: PMC10008172](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10008172/), [DOI: 10.1038/s41592-022-01640-x](https://doi.org/10.1038/s41592-022-01640-x).
+
+```{r}
+sessionInfo()
+```
