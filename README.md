@@ -35,7 +35,9 @@ vignette("looSTAAR-guide")
 
 <b>Δ</b> = log<sub>10</sub>(<i>p</i><sub>full</sub>) − log<sub>10</sub>(<i>p</i><sub>LOO<sub>i</sub></sub>) = log<sub>10</sub>(<i>p</i><sub>full</sub> / <i>p</i><sub>LOO<sub>i</sub></sub>)
 
-A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means \( p_{\text{LOO}_i} > p_{\text{full}} \), so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means \( p_{\text{LOO}_i} < p_{\text{full}} \), suggesting the variant weakens the association. 
+A large Delta_log10p (positive or negative) indicates that a variant influences the omnibus association — though the direction of the effect matters.
+	•	A negative Delta_log10p (e.g., −1.29) means pLOOi > pfull, so removing the variant makes the association less significant, indicating it contributes to the signal (a driver).
+	•	A positive Delta_log10p means pLOOi < pfull, so removing the variant strengthens the association, suggesting it masks the signal (a diluter).
 
 <p align="center">
   <img src="man/synthetic_LOO_STAAR_plot.png" width="1080">
