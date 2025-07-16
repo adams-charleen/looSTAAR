@@ -25,10 +25,6 @@ vignette("looSTAAR-guide")
 | var6       | 0.005431518            | 0.004527936      |  0.07902095   | 6        |
 
 
-<p align="center">
-  <img src="man/synthetic_LOO_STAAR_plot.png" width="1080">
-</p>
-
 ## Interpretation
 
 - The `Baseline_STAAR_O_pval` refers to the omnibus (gene- or region-level) association (not the effects of individual SNPs; it's the same for all). 
@@ -37,12 +33,14 @@ vignette("looSTAAR-guide")
 
 - `Delta_log10p` is the log10 p-value of the difference between `Baseline_STAAR_O_pval` and `LOO_STAAR_O_pval`, where:
 
-$$
-\Delta = \log_{10}\bigl(p_{\text{full}}\bigr)\;-\;\log_{10}\bigl(p_{\text{LOO}_i}\bigr)
-= \log_{10}\!\Bigl(\frac{p_{\text{full}}}{p_{\text{LOO}_i}}\Bigr)
-$$
+<b>Δ</b> = log<sub>10</sub>(<i>p</i><sub>full</sub>) − log<sub>10</sub>(<i>p</i><sub>LOO<sub>i</sub></sub>) = log<sub>10</sub>(<i>p</i><sub>full</sub> / <i>p</i><sub>LOO<sub>i</sub></sub>)
 
 A large `Delta_log10p` (positive or negative) indicates a variant influences the omnibus association, though the direction matters. A negative `Delta_log10p` (e.g., -1.29) means \( p_{\text{LOO}_i} > p_{\text{full}} \), so removing the variant makes the association less significant, indicating it contributes to the signal. A positive value means \( p_{\text{LOO}_i} < p_{\text{full}} \), suggesting the variant weakens the association. 
+
+<p align="center">
+  <img src="man/synthetic_LOO_STAAR_plot.png" width="1080">
+</p>
+
 
 ## Conclusion
 
