@@ -13,9 +13,17 @@ library(looSTAAR)
 vignette("looSTAAR-guide")
 ```
 
-## Visual Example
+## Example Results
 
-Below is a synthetic example showing how each variant influences the STAAR-O gene-level p-value:
+| Variant_ID | Baseline_STAAR_O_pval | LOO_STAAR_O_pval | Delta_log10p | Position |
+|------------|------------------------|------------------|---------------|----------|
+| var1       | 0.005431518            | 0.107018465      | -1.29453753   | 1        |
+| var2       | 0.005431518            | 0.005202969      |  0.01866999   | 2        |
+| var3       | 0.005431518            | 0.004647219      |  0.06772807   | 3        |
+| var4       | 0.005431518            | 0.005431518      |  0.00000000   | 4        |
+| var5       | 0.005431518            | 0.008647024      | -0.20194549   | 5        |
+| var6       | 0.005431518            | 0.004527936      |  0.07902095   | 6        |
+
 
 <p align="center">
   <img src="man/synthetic_LOO_STAAR_plot.png" width="1080">
@@ -49,6 +57,3 @@ I gratefully acknowledge the foundational work of Li and colleagues (2020, 2022)
 
 - Li, Z., Li, X., Zhou, H., Gaynor, S. M., Selvaraj, M. S., Arapoglou, T., ... & Lin, X. (2022). *A framework for detecting noncoding rare variant associations of large-scale whole-genome sequencing studies*. *Nature Methods*, 19(12), 1599-1611. [PMID: 36303018](https://pubmed.ncbi.nlm.nih.gov/36303018/), [PMCID: PMC10008172](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10008172/), [DOI: 10.1038/s41592-022-01640-x](https://doi.org/10.1038/s41592-022-01640-x).
 
-```{r}
-sessionInfo()
-```
