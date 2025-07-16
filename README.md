@@ -8,7 +8,7 @@ An R package for performing leave-one-out analysis for STAAR models. This packag
 ```R
 if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")
 library(devtools)
-devtools::install_github("adams-charleen/looSTAAR")
+install_github("adams-charleen/looSTAAR", build_vignettes = TRUE)
 library(looSTAAR)
 vignette("looSTAAR-guide")
 ```
