@@ -17,9 +17,9 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: |
-            any::ggplot2
-            any::ggrepel
-            any::data.table
-            any::STAAR
+            ggplot2
+            ggrepel
+            data.table
+            github::xihaoli/STAAR
       - name: Check package
         run: R CMD check --no-manual .
