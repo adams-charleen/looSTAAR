@@ -37,9 +37,12 @@ vignette("looSTAAR-guide")
 
 - `Delta_log10p` is the difference in log10 p-values between the full model and the leave-one-out (LOO) model for each variant `Baseline_STAAR_O_pval` and `LOO_STAAR_O_pval`, where:
 
-<div style="text-align:center">
-  <b>Δ</b> = log<sub>10</sub>(<i>p</i><sub>full</sub>) − log<sub>10</sub>(<i>p</i><sub>LOO<i>i</i></sub>) = log<sub>10</sub>(<i>p</i><sub>full</sub> / <i>p</i><sub>LOO<i>i</i></sub>)
+<div style="text-align: center;">
+
+<b>Δ</b> = log<sub>10</sub>(<i>p</i><sub>full</sub>) − log<sub>10</sub>(<i>p</i><sub>LOO<i>i</i></sub>) = log<sub>10</sub>(<i>p</i><sub>full</sub> / <i>p</i><sub>LOO<i>i</i></sub>)
+
 </div>
+
 
 A large `Delta_log10p` (positive or negative) indicates that a variant influences the omnibus association — though the direction of the effect matters.
 
