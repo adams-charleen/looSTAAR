@@ -43,6 +43,11 @@ vignette("looSTAAR-guide")
 
 </div>
 
+$$
+\Delta = \log_{10}(p_{\text{full}}) - \log_{10}(p_{\text{LOO}_i}) = \log_{10}\left( \frac{p_{\text{full}}}{p_{\text{LOO}_i}} \right)
+$$
+
+
 A large `Delta_log10p` (positive or negative) indicates that a variant influences the omnibus association — though the direction of the effect matters.
 
 - A **negative** `Delta_log10p` (e.g., −1.29) means *p*<sub>LOO<sub>i</sub></sub> > *p*<sub>full</sub>, so removing the variant makes the association **less significant**, indicating it **contributes to the signal** (a *driver*).
