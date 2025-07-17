@@ -43,6 +43,7 @@ vignette("looSTAAR-guide")
 
 </div>
 
+`Δ = log₁₀(p_full) − log₁₀(p_LOOᵢ) = log₁₀(p_full / p_LOOᵢ)`
 
 A large `Delta_log10p` (positive or negative) indicates that a variant influences the omnibus association — though the direction of the effect matters.
 
